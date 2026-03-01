@@ -22,7 +22,7 @@ Thanks to the notebook "explore_data", get to know the data, and answer these co
 4. Are there any missing values in the dataset? 
 5. What is the most common answer to "How much do you personally identify as a Midwesterner"?
 
-Thanks to the notebook "compare models":
+Thanks to the notebook "compare models":  
 6. Among the three models, which one has the best recall?
 7. Among the three models, which one has the best practical application?
 8. Among the three models, which one generalizes the best? 

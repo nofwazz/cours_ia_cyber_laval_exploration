@@ -34,7 +34,7 @@ X = dataset.X
 y = dataset.y
 
 # %%
-# To simplifiy evaluation, we will group categories in the target to deal with a binary classification problem instead of a multiclass one.
+# To simplify evaluation, we will group categories in the target to deal with a binary classification problem instead of a multiclass one.
 y = y.apply(lambda x: "North Central" if x in ["East North Central", "West North Central"] else "other")
 
 # %%

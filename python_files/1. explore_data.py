@@ -65,8 +65,7 @@ X.head()
 
 
 # %% [markdown]
-# Is the target balanced (roughly the same number of examples per class)
-# or imbalanced?
+# Is the target balanced (roughly the same number of examples per class) or imbalanced?
 
 # %% [markdown]
 # ## Question 3: What are the features that can be used to predict the target?
@@ -101,8 +100,7 @@ TableReport(X)
 
 
 # %% [markdown]
-# It looks like there are no `NaN` values. But missing values can sometimes
-# be encoded differently. Let's look at some columns more closely.
+# Missing values can sometimes be encoded differently. Let's look at some columns more closely.
 
 # %%
 # Look at unique values for the Household_Income column
