@@ -111,6 +111,21 @@ report.metrics.summarize(pos_label="North Central").frame()
 
 # %% [markdown]
 # Which model has the highest recall?
+from sklearn.metrics import recall_score
+
+print("===== QUESTION 6: RECALL =====")
+
+for name, model in [
+    ("Logistic Regression", model_lr),
+    ("Random Forest", model_rf),
+    ("Gradient Boosting", model_gb),
+]:
+    y_pred = model.predict(X_test)
+    recall = recall_score(y_test, y_pred, pos_label="North Central")
+    print(f"{name} recall:", recall)
+
+from sklearn.metrics import confusion_matrix
+
 
 # %% [markdown]
 # ## Question 7: Which model has the best practical application?
@@ -121,6 +136,28 @@ report.metrics.summarize(pos_label="North Central").frame()
 
 # %% [markdown]
 # Which model makes the most meaningful predictions in practice?
+print("\n===== QUESTION 7: PRACTICAL SCORE =====")
+
+def practical_score(model, X_test, y_test):
+    y_pred = model.predict(X_test)
+    tn, fp, fn, tp = confusion_matrix(
+        y_test, y_pred, labels=["other", "North Central"]
+    ).ravel()
+
+    score = (
+        tp * 5 +      # gain true positive
+        tn * 2 -      # gain true negative
+        fp * 10 -     # cost false positive
+        fn * 1        # cost false negative
+    )
+    return score
+
+for name, model in [
+    ("Logistic Regression", model_lr),
+    ("Random Forest", model_rf),
+    ("Gradient Boosting", model_gb),
+]:
+    print(f"{name} practical score:", practical_score(model, X_test, y_test))
 
 # %% [markdown]
 # ## Question 8: Which model generalizes the best?
@@ -138,11 +175,28 @@ report.metrics.summarize(pos_label="North Central").frame()
 # That model generalizes the best.
 #
 # Which model has the largest gap? That model is likely **overfitting**.
+print("\n===== QUESTION 8: GENERALIZATION =====")
+
+for name, model in [
+    ("Logistic Regression", model_lr),
+    ("Random Forest", model_rf),
+    ("Gradient Boosting", model_gb),
+]:
+    train_score = model.score(X_train, y_train)
+    test_score = model.score(X_test, y_test)
+    gap = train_score - test_score
+    print(f"{name}:")
+    print("  Train accuracy:", train_score)
+    print("  Test accuracy:", test_score)
+    print("  Gap:", gap)
+    print()
 
 # %%
 # TODO: Based on the results above, which model would you choose
 # for a real application? Write your answer as a comment below.
 
-# My choice: ...
-# Reason: ...
-
+# My choice: Gradient Boosting
+# Reason: Il a le meilleur recall (0.99), le meilleur score pratique (4629),
+# et un écart relativement faible entre les performances d'entraînement et de test.
+# Il offre donc le meilleur compromis entre performance et capacité de généralisation
+# pour une application réelle.
